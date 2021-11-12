@@ -39,7 +39,6 @@ public class EmployeePayRollService {
         employeePayrollDataList.add(new EmployeePayRoll(id, name, salary));
     }
 
-    //method to write data on console
     public void writeEmployeePayrollData(IOService ioService) {
         if (ioService.equals(IOService.CONSOLE_IO))
             System.out.println("\nWriting Employee Payroll Roaster To console::\n" + employeePayrollDataList);
@@ -47,14 +46,14 @@ public class EmployeePayRollService {
             new EmployeePayrollFileIOService().writeData(employeePayrollDataList);
     }
 
-    //method to count entries in a file
-    public long countEntries() {
-        long entries = 0;
-        try {
-            entries = Files.lines(new File("payroll-file.txt").toPath()).count();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return entries;
+    public long count(IOService ioService) {
+        if(ioService.equals(IOService.FILE_IO))
+            return new EmployeePayrollFileIOService().countEntries();
+        return 0;
+    }
+    //method to print entries from a file
+    public void printData(IOService ioService){
+        if(ioService.equals(IOService.FILE_IO))
+            new EmployeePayrollFileIOService().printData();
     }
 }
